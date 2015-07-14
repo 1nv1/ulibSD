@@ -1,8 +1,9 @@
 # ulibSD
-It's a library for use SD cards in SPI mode with uControllers. This library can
-work with SD cards and also has the possibility to emulate the behavior in a
-PC file (GNU/Linux) using the macro _M_IX86. It's for debugging purposes.
-ulibSD is oriented to 512 byte data block, remember this ;)
+It's a library for use SD cards in SPI mode with uControllers, entirely written
+in C. This library can work with SD cards and also has the possibility to
+emulate the behavior in a PC file (GNU/Linux) using the macro _M_IX86. It's for
+debugging purposes. The data transfer is oriented to 512 byte size,
+remember this ;)
 
 This library was strongly inspired by elm-chang [FatFs](http://elm-chan.org/fsw/ff/00index_e.html) code.
 
