@@ -37,6 +37,11 @@ You need write the proper code for this methods. I leave a `spi_io.c.example`
 file for use as guideline. I hope this helps to you understand how is the logic
 of portability. This example is for KL25Z board using my OpenKL25Z framework.
 
+### Important
+
+I wanna make a comment about the CS line (chip select). If you use a SPI module in your hardware don't use the CS automatic capability. When you send a command package to SD card (command and argument), we will need the CS line in low-level all the time. If you use the CS automatic capability this logic will be broken.
+Also I strongly recommend uses a hardware timer associated with `SPI_Timer` methods.
+
 ## Example of use
 
 ```c
