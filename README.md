@@ -2,7 +2,9 @@
 It's a library for use SD cards in SPI mode with uControllers. This library can
 work with SD cards and also has the possibility to emulate the behavior in a
 PC file (GNU/Linux) using the macro _M_IX86. It's for debugging purposes.
-ulibSD is oriented to 512 byte data block. Remember this ;)
+ulibSD is oriented to 512 byte data block, remember this ;)
+
+This library was strongly inspired by elm-chang [FatFs](http://elm-chan.org/fsw/ff/00index_e.html) code.
 
 ## Public methods
 ulibSD has four public methods:
@@ -13,6 +15,26 @@ ulibSD has four public methods:
 * SD_Status: Allows know status of SD card.
 
 Those methods require a device descriptor.
+
+## How is possible port the code to my platform?
+
+This library uses a `spi_io.h` header. Here are defined the low-level methods 
+associated with the hardware. Those methods are:
+
+* `SPI_Init`: Initialize SPI hardware.
+* `SPI_RW`: Read/Write a single byte. Returns the byte that arrived.
+* `SPI_Release`: Flush of SPI buffer.
+* `SPI_CS_Low`: Selecting function in SPI terms, associated with SPI module.
+* `SPI_CS_High`: Deselecting function in SPI terms, associated with SPI module.
+* `SPI_Freq_High`: Setting frequency of SPI's clock to maximun possible.
+* `SPI_Freq_Low`: Setting frequency of SPI's clock equal or lower than 400kHz.
+* `SPI_Timer_On`: Start a non-blocking timer in milliseconds.
+* `SPI_Timer_Status`: Check the status of non-blocking timer.
+* `SPI_Timer_Off`: Stop of non-blocking timer.
+
+You need write the proper code for this methods. I leave a `spi_io.c.example` 
+file for use as guideline. I hope this helps to you understand how is the logic
+of portability. This example is for KL25Z board using my OpenKL25Z framework.
 
 ## Example of use
 
