@@ -1,8 +1,9 @@
 /*
- *  sd_io.c
- *  Author: Nelson Lombardo (C) 2015
+ *  File: sd_io.c
+ *  Author: Nelson Lombardo
+ *  Year: 2015
  *  e-mail: nelson.lombardo@gmail.com
- *  License: MIT
+ *  License at the end of file.
  */
 
 #include "sd_io.h"
@@ -443,3 +444,39 @@ SDRESULTS SD_Status(SD_DEV *dev)
     return(__SD_Send_Cmd(CMD0, 0) ? SD_OK : SD_NORESPONSE);
 #endif
 }
+
+// «sd_io.c» is part of:
+/*----------------------------------------------------------------------------/
+/  ulibSD - Library for SD cards semantics            (C)Nelson Lombardo, 2015
+/-----------------------------------------------------------------------------/
+/ ulibSD library is a free software that opened under license policy of
+/ following conditions.
+/
+/ Copyright (C) 2015, ChaN, all right reserved.
+/
+/ 1. Redistributions of source code must retain the above copyright notice,
+/    this condition and the following disclaimer.
+/
+/ This software is provided by the copyright holder and contributors "AS IS"
+/ and any warranties related to this software are DISCLAIMED.
+/ The copyright owner or contributors be NOT LIABLE for any damages caused
+/ by use of this software.
+/----------------------------------------------------------------------------*/
+
+// Derived from Mister Chan works on FatFs code (http://elm-chan.org/fsw/ff/00index_e.html):
+/*----------------------------------------------------------------------------/
+/  FatFs - FAT file system module  R0.11                 (C)ChaN, 2015
+/-----------------------------------------------------------------------------/
+/ FatFs module is a free software that opened under license policy of
+/ following conditions.
+/
+/ Copyright (C) 2015, ChaN, all right reserved.
+/
+/ 1. Redistributions of source code must retain the above copyright notice,
+/    this condition and the following disclaimer.
+/
+/ This software is provided by the copyright holder and contributors "AS IS"
+/ and any warranties related to this software are DISCLAIMED.
+/ The copyright owner or contributors be NOT LIABLE for any damages caused
+/ by use of this software.
+/----------------------------------------------------------------------------*/
