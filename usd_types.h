@@ -1,47 +1,47 @@
 /*
- *  File: integer.h
+ *  File: usd_types.h
  *  Author: Nelson Lombardo
- *  Year: 2015
+ *  Year: 2015-2020
  *  e-mail: nelson.lombardo@gmail.com
  *  License at the end of file.
  */
- 
-/*****************************************************************************/
-/* Integer type definitions                                                  */
-/*****************************************************************************/
-#ifndef _INTEGER_H_
-#define _INTEGER_H_
+
+/******************************************************************************/
+/* Types definitions                                                          */
+/******************************************************************************/
+#ifndef _USD_TYPES_H_
+#define _USD_TYPES_H_
 
 #include <stdint.h>
 
 /* 16-bit, 32-bit or larger integer */
-typedef int16_t         INT;
-typedef uint16_t        UINT;
+typedef int16_t   USD_INT;
+typedef uint16_t  USD_UINT;
 
 /* 8-bit integer */
-typedef int8_t          CHAR;
-typedef uint8_t         UCHAR;
-typedef uint8_t         BYTE;
-typedef uint8_t         BOOL;
+typedef int8_t    USD_CHAR;
+typedef uint8_t   USD_UCHAR;
+typedef uint8_t   USD_BYTE;
+typedef uint8_t   USD_BOOL;
 
 /* 16-bit integer */
-typedef int16_t         SHORT;
-typedef uint16_t        USHORT;
-typedef uint16_t        WORD;
-typedef uint16_t        WCHAR;
+typedef int16_t   USD_SHORT;
+typedef uint16_t  USD_USHORT;
+typedef uint16_t  USD_WORD;
+typedef uint16_t  USD_WCHAR;
 
 /* 32-bit integer */
-typedef int32_t         LONG;
-typedef uint32_t        ULONG;
-typedef uint32_t        DWORD;
+typedef int32_t   USD_LONG;
+typedef uint32_t  USD_ULONG;
+typedef uint32_t  USD_DWORD;
 
 /* Boolean type */
-typedef enum { FALSE = 0, TRUE } BOOLEAN;
-typedef enum { LOW = 0, HIGH } THROTTLE;
+typedef enum { FALSE = 0, TRUE } USD_BOOLEAN;
+typedef enum { LOW = 0, HIGH }   USD_THROTTLE;
 
 #endif
 
-// «integer.h» is part of:
+// «usd_types.h» is part of:
 /*----------------------------------------------------------------------------/
 /  ulibSD - Library for SD cards semantics            (C)Nelson Lombardo, 2015
 /-----------------------------------------------------------------------------/

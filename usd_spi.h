@@ -8,7 +8,7 @@
 #ifndef _SPI_IO_H_
 #define _SPI_IO_H_
 
-#include "integer.h"        /* Type redefinition for portability */
+#include "sd_types.h"        /* Type redefinition for portability */
 
 
 /******************************************************************************

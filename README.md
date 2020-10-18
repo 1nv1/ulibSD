@@ -1,4 +1,5 @@
-# ulibSD
+# ulibSD (usd)
+
 It's a library for use SD cards in SPI mode with uControllers, entirely written
 in C. This library can work with SD cards and also has the possibility to
 emulate the behavior in a PC file (GNU/Linux) using the macro _M_IX86. It's for
@@ -6,6 +7,7 @@ debugging purposes. The data transfer is oriented to 512 byte size,
 remember this.
 
 ## Public methods
+
 ulibSD has four public methods:
 
 * SD_Init: Initialization the SD card.
@@ -17,7 +19,7 @@ Those methods require a device descriptor.
 
 ## How is possible port the code to my platform?
 
-This library uses a `spi_io.h` header. Here are defined the low-level methods 
+This library uses a `usd_spi.h` header. Here are defined the low-level methods 
 associated with the hardware. Those methods are:
 
 * `SPI_Init`: Initialize SPI hardware.
@@ -31,35 +33,31 @@ associated with the hardware. Those methods are:
 * `SPI_Timer_Status`: Check the status of non-blocking timer.
 * `SPI_Timer_Off`: Stop of non-blocking timer.
 
-You need write the proper code for this methods. I leave a `spi_io.c.example` 
-file for use as guideline. I hope this helps to you understand how is the logic
+You need write the proper code for this methods. I leave a `usd_spi.c` 
+file for use as *guideline*. I hope this helps to you understand how is the logic
 of portability. This example is for KL25Z board using my OpenKL25Z framework.
 
-Also you need verify and adapt the integer types in the `integer.h` file.
+Also you need verify and adapt the integer types in the `usd_types.h` file.
 
 ## Example of use
 
 ```c
-SD_DEV dev[1];          // Create device descriptor
+uSD_DEV dev[1];          // Create device descriptor
 uint8_t buffer[512];    // Example of your buffer data
-void main(void)
-{
+void main(void) {
   SDRESULTS res;
   // Part of your initialization code here
-  if(SD_Init(dev)==SD_OK)
-  {
+  if (SD_Init(dev)==SD_OK) {
     // You can read the sd card. For example you can read from the second
     // sector the set of bytes between [04..20]:
     // - Second sector is 1
     // - Offset is 4
     // - Bytes to count is 16 (20 minus 4)
     res = SD_Read(dev, (void*)buffer, 1, 4, 16);
-    if(res==SD_OK)
-    {
+    if (res==SD_OK) {
       // Maybe you wish change the data on this sector:
       res = SD_Write(dev, (void*)buffer, 1);
-      if(res==SD_OK)
-      {
+      if (res==SD_OK) {
         // Some action here
       }
     }
