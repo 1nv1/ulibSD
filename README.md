@@ -10,10 +10,10 @@ remember this.
 
 ulibSD has four public methods:
 
-* SD_Init: Initialization the SD card.
-* SD_Read: Read a single block of data.
-* SD_Write: Write a single block of data.
-* SD_Status: Allows know status of SD card.
+* uSD_Init: Initialization the SD card.
+* uSD_Read: Read a single block of data.
+* uSD_Write: Write a single block of data.
+* uSD_Status: Allows know status of SD card.
 
 Those methods require a device descriptor.
 
