@@ -22,16 +22,16 @@ Those methods require a device descriptor.
 This library uses a `usd_spi.h` header. Here are defined the low-level methods 
 associated with the hardware. Those methods are:
 
-* `SPI_Init`: Initialize SPI hardware.
-* `SPI_RW`: Read/Write a single byte. Returns the byte that arrived.
-* `SPI_Release`: Flush of SPI buffer.
-* `SPI_CS_Low`: Selecting function in SPI terms, associated with SPI module.
-* `SPI_CS_High`: Deselecting function in SPI terms, associated with SPI module.
-* `SPI_Freq_High`: Setting frequency of SPI's clock to maximun possible.
-* `SPI_Freq_Low`: Setting frequency of SPI's clock equal or lower than 400kHz.
-* `SPI_Timer_On`: Start a non-blocking timer in milliseconds.
-* `SPI_Timer_Status`: Check the status of non-blocking timer.
-* `SPI_Timer_Off`: Stop of non-blocking timer.
+* `uSD_SPI_Init`: Initialize SPI hardware.
+* `uSD_SPI_RW`: Read/Write a single byte. Returns the byte that arrived.
+* `uSD_SPI_Release`: Flush of SPI buffer.
+* `uSD_SPI_CS_Low`: Selecting function in SPI terms, associated with SPI module.
+* `uSD_SPI_CS_High`: Deselecting function in SPI terms, associated with SPI module.
+* `uSD_SPI_Freq_High`: Setting frequency of SPI's clock to maximun possible.
+* `uSD_SPI_Freq_Low`: Setting frequency of SPI's clock equal or lower than 400kHz.
+* `uSD_SPI_Timer_On`: Start a non-blocking timer in milliseconds.
+* `uSD_SPI_Timer_Status`: Check the status of non-blocking timer.
+* `uSD_SPI_Timer_Off`: Stop of non-blocking timer.
 
 You need write the proper code for this methods. I leave a `usd_spi.c` 
 file for use as *guideline*. I hope this helps to you understand how is the logic
@@ -43,21 +43,21 @@ Also you need verify and adapt the integer types in the `usd_types.h` file.
 
 ```c
 uSD_DEV dev[1];          // Create device descriptor
-uint8_t buffer[512];    // Example of your buffer data
+USD_BYTE buffer[512];    // Example of your buffer data
 void main(void) {
-  SDRESULTS res;
+  USD_RESULTS res;
   // Part of your initialization code here
-  if (SD_Init(dev)==SD_OK) {
+  if (uSD_Init(dev) == USD_OK) {
     // You can read the sd card. For example you can read from the second
     // sector the set of bytes between [04..20]:
     // - Second sector is 1
     // - Offset is 4
     // - Bytes to count is 16 (20 minus 4)
-    res = SD_Read(dev, (void*)buffer, 1, 4, 16);
-    if (res==SD_OK) {
+    res = uSD_Read(dev, (void*)buffer, 1, 4, 16);
+    if (res == USD_OK) {
       // Maybe you wish change the data on this sector:
-      res = SD_Write(dev, (void*)buffer, 1);
-      if (res==SD_OK) {
+      res = uSD_Write(dev, (void*)buffer, 1);
+      if (res == USD_OK) {
         // Some action here
       }
     }
