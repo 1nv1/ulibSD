@@ -188,7 +188,7 @@ DWORD __SD_Sectors (SD_DEV *dev)
     BYTE csd[16];
     BYTE idx;
     DWORD ss = 0;
-    WORD C_SIZE = 0;
+    DWORD C_SIZE = 0;
     BYTE C_SIZE_MULT = 0;
     BYTE READ_BL_LEN = 0;
     if(__SD_Send_Cmd(CMD9, 0)==0) 
@@ -215,22 +215,27 @@ DWORD __SD_Sectors (SD_DEV *dev)
             C_SIZE_MULT = (csd[9] & 0x03);
             C_SIZE_MULT <<= 1;
             C_SIZE_MULT |= ((csd[10] >> 7) & 0x01);
+            C_SIZE_MULT += 2;
         }
         else if(dev->cardtype & SDCT_SD2)
         {
             // C_SIZE [69:48]
             C_SIZE = (csd[7] & 0x3F);
-            C_SIZE <<= 8;
+            C_SIZE <<= 16;
             C_SIZE |= (csd[8] & 0xFF);
             C_SIZE <<= 8;
             C_SIZE |= (csd[9] & 0xFF);
-            // C_SIZE_MULT [--]. don't exits
-            C_SIZE_MULT = 0;
+            // C_SIZE_MULT will be 0x400 for SDHC and SDXC
+            C_SIZE_MULT = 10;
         }
         ss = (C_SIZE + 1);
-        ss *= __SD_Power_Of_Two(C_SIZE_MULT + 2);
-        ss *= __SD_Power_Of_Two(READ_BL_LEN);
-        ss /= SD_BLK_SIZE;
+        ss *= __SD_Power_Of_Two(C_SIZE_MULT);
+
+        if(dev->cardtype & SDCT_SD1)
+        {
+            ss *= __SD_Power_Of_Two(READ_BL_LEN);
+            ss /= SD_BLK_SIZE;
+        }
         return (ss);
     } else return (0); // Error
 }
@@ -365,8 +370,10 @@ SDRESULTS SD_Read(SD_DEV *dev, void *dat, DWORD sector, WORD ofs, WORD cnt)
     WORD remaining;
     res = SD_ERROR;
     if ((sector > dev->last_sector)||(cnt == 0)) return(SD_PARERR);
-    // Convert sector number to byte address (sector * SD_BLK_SIZE)
-    if (__SD_Send_Cmd(CMD17, sector * SD_BLK_SIZE) == 0) {
+    // Convert sector number to byte address (sector * SD_BLK_SIZE) if SD v1
+    if(dev->cardtype == SDCT_SD1)
+        sector *= SD_BLK_SIZE;
+    if (__SD_Send_Cmd(CMD17, sector) == 0) {
         SPI_Timer_On(100);  // Wait for data packet (timeout of 100ms)
         do {
             tkn = SPI_RW(0xFF);
@@ -427,8 +434,11 @@ SDRESULTS SD_Write(SD_DEV *dev, void *dat, DWORD sector)
     // Query ok?
     if(sector > dev->last_sector) return(SD_PARERR);
     // Single block write (token <- 0xFE)
-    // Convert sector number to bytes address (sector * SD_BLK_SIZE)
-    if(__SD_Send_Cmd(CMD24, sector * SD_BLK_SIZE)==0)
+    // Convert sector number to bytes address (sector * SD_BLK_SIZE) if SD v1
+    if(dev->cardtype == SDCT_SD1)
+        sector *= SD_BLK_SIZE;
+
+    if(__SD_Send_Cmd(CMD24, sector)==0)
         return(__SD_Write_Block(dev, dat, 0xFE));
     else
         return(SD_ERROR);

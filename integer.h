@@ -15,8 +15,8 @@
 #include <stdint.h>
 
 /* 16-bit, 32-bit or larger integer */
-typedef int16_t         INT;
-typedef uint16_t        UINT;
+typedef int             INT;
+typedef unsigned int    UINT;
 
 /* 8-bit integer */
 typedef int8_t          CHAR;
